@@ -1,10 +1,10 @@
 # Assistenzrobotik
 
-= Troubleshooting =
+## Troubleshooting
 
 (Annahme: morse-Verzeichnis MORSE = /usr/lib/python3/dist-packages/morse)
 
-== Armatures - ROS ==
+### Armatures - ROS
 
 In der initialen Konfiguration lassen sich die vorgegebenen Roboterarme nicht mit ROS ansteuern (oder auslesen). Dieses Problem wurde noch nicht behoben, allerdings wurden einige Erkenntnisse gewonnen:
 
