@@ -1,10 +1,10 @@
 # Assistenzrobotik
 
-= Troubleshooting =
+## Troubleshooting
 
 (Annahme: morse-Verzeichnis MORSE = /usr/lib/python3/dist-packages/morse)
 
-== Armatures - ROS ==
+### Armatures - ROS
 
 In der initialen Konfiguration lassen sich die vorgegebenen Roboterarme nicht mit ROS ansteuern (oder auslesen). Dieses Problem wurde noch nicht behoben, allerdings wurden einige Erkenntnisse gewonnen:
 
@@ -16,6 +16,6 @@ In der initialen Konfiguration lassen sich die vorgegebenen Roboterarme nicht mi
 
 * Angeblich lassen sich armatures über das JointTrajectoryAction interface ansprechen.
  * http://www.openrobots.org/morse/doc/latest/user/actuators/armature.html
- * http://www.openrobots.org/morse/doc/latest/user/actuators/armature.html
+ * http://wiki.ros.org/joint_trajectory_action
  * Es existiert ein file in MORSE/middleware/ros/overlays/armatures.py, welches angeblich dieses interface nutzt. Ich habe noch nicht verstanden, ob man das separat einbinden muss (über data.py geht es nicht), oder ob es als overlay irgendwo schon dabei ist.
 
