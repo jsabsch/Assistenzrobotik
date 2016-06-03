@@ -1,5 +1,23 @@
 # Assistenzrobotik
 
+## Aktuelle Aufgaben
+
+im childscript vom Arm:
+ - subscribe zielpose
+ - rufe Funktion zur IK-Berechnung auf
+
+ - lese Momentum des Arms aus
+
+in externem Skript:
+ - subscribe Arm-Status
+ - plane Posen (mit Kraftregelung)
+ - publishe an VREP
+
+
+modelliere Umgebung/Roboter
+
+# Altes Zeug
+
 ## Troubleshooting
 
 (Annahme: morse-Verzeichnis MORSE = /usr/lib/python3/dist-packages/morse)
