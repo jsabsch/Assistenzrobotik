@@ -1,5 +1,9 @@
 # Assistenzrobotik
 
+## ROS-Anbindung
+
+Möglicherweise ist das ROS_Interface doch besser geeignet als das ROS-Plugin, zumindest sollte das eine ganz gewöhnliche Publisher/Subscriber-Architektur in LUA ermöglichen. Habs aber noch nicht installiert bekommen, mehr dazu hoffentlich morgen (Samstag).
+
 ## Aktuelle Aufgaben
 
 im childscript vom Arm:
