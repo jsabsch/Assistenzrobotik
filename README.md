@@ -2,7 +2,24 @@
 
 ## ROS-Anbindung
 
-Möglicherweise ist das ROS_Interface doch besser geeignet als das ROS-Plugin, zumindest sollte das eine ganz gewöhnliche Publisher/Subscriber-Architektur in LUA ermöglichen. Habs aber noch nicht installiert bekommen, mehr dazu hoffentlich morgen (Samstag).
+Möglicherweise ist das ROS_Interface doch besser geeignet als das ROS-Plugin, da es eine ganz gewöhnliche Publisher/Subscriber-Architektur in LUA ermöglicht. Das würde aber bedeuten, dass wir den Status des Arms selbst auslesen müssen, um ihn zu publishen. (@Felix: Du bist da hoffentlich der Experte. :) )
+
+### Installation ROS-Interface
+
+1. Möglichkeit:
+ 
+ In $(VREP_DIR)/compiledRosPlugins liegt bereits das File libv_repExtRosInterface.so. Zieht das direkt in $(VREP_DIR) hinein, wo auch alle anderen .so-Dateien liegen. Vielleicht reicht das bei euch schon; bei mir musste ich den Kram aber selbst kompilieren.
+
+2. Möglichkeit:
+
+ In $(VREP_DIR)/programming/ros_packages liegt der Ordner vrep_ros_interface. Der muss erstmal kompiliert werden. Bei mir hat das nicht direkt vor Ort geklappt, also habe ich ihn in einen anderen Ordner (der auch ein catkin_workspace war, vielleicht ist das wichtig) verschoben. Die Struktur sah also so aus: catkin_ws/src/vrep_ros_interface.
+ 
+ Ach ja, darin gibt es auch eine Readme, die euch empfiehlt, v_repSubsGen zu installieren. Macht das mal so, wie empfohlen; am Ende liegt der Ordner "external" bei mir innerhalb von vrep_ros_interface.
+
+ Um catkin build durchzuführen, müsst ihr erstmal die catkin_tools installieren (mit catkin_make hats bei mir nicht geklappt). Das geht über "sudo pip install catkin_tools". Danach catkin build in catkin_ws ausführen.
+ 
+ Das müsste die Ordner build, devel und logs generieren. In devel/lib sollte jetzt libv_repExtRosInterface.so liegen. Einfach in $(VREP_DIR) kopieren, dann hats zummindest bei mir geklappt.
+
 
 ## Aktuelle Aufgaben
 
