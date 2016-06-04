@@ -10,7 +10,7 @@ def subscribe_arm_state(msg):
 
 if __name__ == '__main__':
 
-    rospy.init_node('fusion_hack4')
+    rospy.init_node('assistenzrobotik')
     
     rospy.Subscriber("/vrep/LBR_iiwa_14_RB20/jointStatus", JointState, subscribe_arm_state)
     right_pub = rospy.Publisher("target_pose", Pose, queue_size=1)
