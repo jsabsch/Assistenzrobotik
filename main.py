@@ -112,7 +112,7 @@ if __name__ == '__main__':
     standard_path = __init_pose_array()
         
     rospy.Subscriber("/vrep/LBR_iiwa_14_RB20/jointStatus", JointState, subscribe_arm_state)
-    right_pub = rospy.Publisher("target_pose", PoseStamped, queue_size=1)
+    right_pub = rospy.Publisher("commands", PoseStamped, queue_size=1)
     
     index = 0
     seq = 0
