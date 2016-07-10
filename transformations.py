@@ -19,7 +19,7 @@ def mult(m1,m2):
     ret= [['0' for j in range(len(m2[0]))] for i in range(len(m1))]
 
     if len(m1[0]) != len(m2):   # assumption: len(m[0]) == len(m[i])
-        print("matricces cannot be multiplied, wrong matrix size: ", m1[0].size, m2.size)
+        print("matricces cannot be multiplied, wrong matrix size: ", len(m1[0]), len(m2))
         return 0
     
     for i in range(len(m1)):
@@ -190,8 +190,8 @@ class transformations():
         self.t0i = []
     
     def kuka_lbr_iiwa_14(self):
-        self.t0i.clear()
-        self.t.clear()
+        self.t0i = []
+        self.t = []
         self.t.append([['c0', '0', 's0', '0'], ['s0', '0', '-c0', '0'], ['0', '1', '0', 'l1'], ['0', '0', '0', '1']])
         self.t.append([['c1', '0', '-s1', '0'], ['s1', '0', 'c1', '0'], ['0', '-1', '0', '0'], ['0', '0', '0', '1']])
         self.t.append([['c2', '0', 's2', '0'], ['s2', '0', '-c2', '0'], ['0', '1', '0', 'l2'], ['0', '0', '0', '1']])
@@ -233,6 +233,32 @@ class transformations():
     def calculate_jacobians(self):
         return [jacobian(self.transform0i(), i) for i in range(6)]
 
+    def coms(self, q,l):
+        return [self.__coms(q,l,i) for i in range(len(self.t0i))]
+
+    def __coms(self, q, l, ind):
+        if ind == 5:
+            return [[calc(st,q,l) for st in row] for row in mult(self.t0i[5], [[str(e)] for e in [0,0,0,1]])[0:3]]
+    
+        if ind % 2 == 0:
+            # dreh -> next: kipp
+            local_point = [0,-0.5,0, 1]
+        else:
+            # kipp -> next: dreh
+            local_point = [0,0,-0.5, 1]
+        
+        if ind == 0:
+            local_point *= l[0]
+        elif ind < 3:
+            local_point *= l[1]
+        elif ind < 5:
+            local_point *= l[2]
+        else:
+            local_point *= l[3]
+        local_point[3] = 1
+        
+        return [[calc(st,q,l) for st in row] for row in mult(self.t0i[ind+1], [[str(e)] for e in local_point])[0:3]]
+        
 class jacobian():
     
     def __init__(self, transformation_matricces, index):
