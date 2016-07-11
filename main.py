@@ -8,6 +8,7 @@ from geometry_msgs.msg import Pose
 from geometry_msgs.msg import Vector3Stamped
 
 import force
+import velocity
 
 def subscribe_arm_state(msg):
     """ Get the Pose of the arms last joint and control the target positions.
@@ -123,7 +124,8 @@ if __name__ == '__main__':
 
     rospy.Subscriber("/endEffectorPos", PoseStamped, subscribe_arm_state)
     right_pub = rospy.Publisher("/targetPos", PoseStamped, queue_size=1)
-    rospy.Publisher("/maxVelocity", Vector3Stamped, queue_size=1)
+
+    velocityCalculator = velocity.Velocity()
 
     index = 0
     seq = 0
