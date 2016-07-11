@@ -11,19 +11,9 @@ import force
 import velocity
 
 def subscribe_arm_state(msg):
-    """ Get the Pose of the arms last joint and control the target positions.
-    
-    Compare the arms pose to the current target position and switch to the next one, if the are similar 
-    enough.
-    
-    """
-    
-    global on_target
+    rate.sleep()
+    pass
 
-    if __is_on_target(msg.pose):
-        on_target = True
-    else:
-        on_target = False
  
 def __is_on_target(pose):
     """ TODO: get arm state. if is nearly the same as target position, set on_target true
@@ -52,17 +42,24 @@ def __init_pose_array():
     """ define the standard path for the robot.
     """
     path = []
-    path.append(__pose(0,0,0.2, 0,0,0,0))
-    path.append(__pose(0,0,0,0, 0,0,0))
-    path.append(__pose(0,0,0.2, 0,0,0,0))
-    path.append(__pose(0,0.2,0.2, 0,0,0,0))
-    path.append(__pose(0,0.2,0, 0,0,0,0))
-    path.append(__pose(0,0.2,0.2, 0,0,0,0))
-    path.append(__pose(0.2,0.2,0.2, 0,0,0,0))
-    path.append(__pose(0.2,0.2,0, 0,0,0,0))
-    path.append(__pose(0.2,0,0.2, 0,0,0,0))
-    path.append(__pose(0.2,0,0, 0,0,0,0))
-    path.append(__pose(0.2,0,0.2, 0,0,0,0))
+    f = 0.2
+    path.append(__pose(-f, 0, -f,     0, 0, 0, 0))
+    path.append(__pose(+f, 0, -f,     0, 0, 0, 0))
+    path.append(__pose(+f, 0, +f,     0, 0, 0, 0))
+    path.append(__pose(-f, 0, +f,     0, 0, 0, 0))
+
+    ## old
+    # path.append(__pose(0, 0, f, 0, 0, 0, 0))
+    # path.append(__pose(0,0,0,0, 0,0,0))
+    # path.append(__pose(0, 0, f, 0, 0, 0, 0))
+    # path.append(__pose(0, f, f, 0, 0, 0, 0))
+    # path.append(__pose(0, f, 0, 0, 0, 0, 0))
+    # path.append(__pose(0, f, f, 0, 0, 0, 0))
+    # path.append(__pose(f, f, f, 0, 0, 0, 0))
+    # path.append(__pose(f, f, 0, 0, 0, 0, 0))
+    # path.append(__pose(f, 0, f, 0, 0, 0, 0))
+    # path.append(__pose(f, 0, 0, 0, 0, 0, 0))
+    # path.append(__pose(f, 0, f, 0, 0, 0, 0))
     
     return path
     
