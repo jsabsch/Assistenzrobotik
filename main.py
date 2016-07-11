@@ -47,20 +47,6 @@ def __init_pose_array():
     path.append(__pose(+f, 0, -f,     0, 0, 0, 0))
     path.append(__pose(+f, 0, +f,     0, 0, 0, 0))
     path.append(__pose(-f, 0, +f,     0, 0, 0, 0))
-
-    ## old
-    # path.append(__pose(0, 0, f, 0, 0, 0, 0))
-    # path.append(__pose(0,0,0,0, 0,0,0))
-    # path.append(__pose(0, 0, f, 0, 0, 0, 0))
-    # path.append(__pose(0, f, f, 0, 0, 0, 0))
-    # path.append(__pose(0, f, 0, 0, 0, 0, 0))
-    # path.append(__pose(0, f, f, 0, 0, 0, 0))
-    # path.append(__pose(f, f, f, 0, 0, 0, 0))
-    # path.append(__pose(f, f, 0, 0, 0, 0, 0))
-    # path.append(__pose(f, 0, f, 0, 0, 0, 0))
-    # path.append(__pose(f, 0, 0, 0, 0, 0, 0))
-    # path.append(__pose(f, 0, f, 0, 0, 0, 0))
-    
     return path
     
 def __pose(px,py,pz,ow,ox,oy,oz):
