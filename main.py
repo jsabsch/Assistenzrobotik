@@ -2,19 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import rospy
-from sensor_msgs.msg import JointState
 from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Pose
 from geometry_msgs.msg import Vector3Stamped
 
-import force
 import velocity
 
-def subscribe_arm_state(msg):
-    rate.sleep()
-    pass
-
- 
 def __is_on_target(pose):
     """ TODO: get arm state. if is nearly the same as target position, set on_target true
     """
@@ -32,7 +25,10 @@ def rotate_path(path, index):
             index = 0
     
     global right_pub
+    global velocityCalculator
     pose = path[index]
+    velocityCalculator.setDir((pose.pose.position.x, pose.pose.position.y, pose.pose.position.z))
+    
     __fill_header(pose.header)
     right_pub.publish(pose)
     
@@ -105,7 +101,6 @@ if __name__ == '__main__':
 
     standard_path = __init_pose_array()
 
-    rospy.Subscriber("/endEffectorPos", PoseStamped, subscribe_arm_state)
     right_pub = rospy.Publisher("/targetPos", PoseStamped, queue_size=1)
 
     velocityCalculator = velocity.Velocity()
@@ -116,9 +111,11 @@ if __name__ == '__main__':
     
     tmp_counter = 0 # TODO: NUR ZUM TESTEN
     
+    print("Start successful.")
+    
     while not rospy.is_shutdown():
         index = rotate_path(standard_path, index)
         on_target = tmp()   # TODO: NUR ZUM TESTEN
         rate.sleep()
 
-    rospy.spin()
+    print("\nShutdown.")

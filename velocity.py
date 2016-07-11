@@ -16,12 +16,13 @@ class Velocity():
         rospy.Subscriber("/arm_state", JointState, self.subscribe_arm_state)
         self.max_vel_pub = rospy.Publisher("/maxVelocity", Vector3Stamped, queue_size=1)
         self.forceCalc = force.force_calculator(MAX_FORCE, MASSES, LENGTHS)
+        
+        self.direction = [1,0,0]
 
     def subscribe_arm_state(self, msg):
         if isinstance(msg, JointState):
             q = msg.position
-            direction = [1, 0, 0]  # FIXME
-            maxVelocityScalar, m_u = self.forceCalc.calc_max_speed(q, direction)
+            maxVelocityScalar, m_u = self.forceCalc.calc_max_speed(q, self.direction)
             msg = self.toMessage(maxVelocityScalar)
             self.max_vel_pub.publish(msg)
 
@@ -30,7 +31,9 @@ class Velocity():
         v = msg.vector
         v.x = v.y = v.z = maxVelocity
         return msg
-
+    
+    def setDir(self, direction):
+        self.direction = direction
 
 if __name__ == '__main__':
     rospy.init_node('velocityCalculation')
