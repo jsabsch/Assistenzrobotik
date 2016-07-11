@@ -92,3 +92,10 @@ ENV/
 .ropeproject
 
 # Created by .ignore support plugin (hsz.mobi)
+
+other_stuff
+VL
+
+.project
+.pydevproject
+.settings

@@ -192,11 +192,11 @@ class transformations():
     def kuka_lbr_iiwa_14(self):
         self.t0i = []
         self.t = []
-        self.t.append([['c0', '0', 's0', '0'], ['s0', '0', '-c0', '0'], ['0', '1', '0', 'l1'], ['0', '0', '0', '1']])
+        self.t.append([['c0', '0', 's0', '0'], ['s0', '0', '-c0', '0'], ['0', '1', '0', 'l0'], ['0', '0', '0', '1']])
         self.t.append([['c1', '0', '-s1', '0'], ['s1', '0', 'c1', '0'], ['0', '-1', '0', '0'], ['0', '0', '0', '1']])
-        self.t.append([['c2', '0', 's2', '0'], ['s2', '0', '-c2', '0'], ['0', '1', '0', 'l2'], ['0', '0', '0', '1']])
+        self.t.append([['c2', '0', 's2', '0'], ['s2', '0', '-c2', '0'], ['0', '1', '0', 'l1'], ['0', '0', '0', '1']])
         self.t.append([['c3', '0', '-s3', '0'], ['s3', '0', 'c3', '0'], ['0', '-1', '0', '0'], ['0', '0', '0', '1']])
-        self.t.append([['c4', '0', 's4', '0'], ['s4', '0', '-c4', '0'], ['0', '1', '0', 'l3'], ['0', '0', '0', '1']])
+        self.t.append([['c4', '0', 's4', '0'], ['s4', '0', '-c4', '0'], ['0', '1', '0', 'l2'], ['0', '0', '0', '1']])
         self.t.append([['c5', '0', '-s5', '0'], ['s5', '0', 'c5', '0'], ['0', '-1', '0', '0'], ['0', '0', '0', '1']])
          
     def transform0i(self):
@@ -248,15 +248,17 @@ class transformations():
             local_point = [0,0,-0.5, 1]
         
         if ind == 0:
-            local_point *= l[0]
+            length_index = 0
         elif ind < 3:
-            local_point *= l[1]
+            length_index = 1
         elif ind < 5:
-            local_point *= l[2]
+            length_index = 2
         else:
-            local_point *= l[3]
-        local_point[3] = 1
+            length_index = 3
         
+        local_point = [p * l[length_index] for p in local_point]
+        # local_point[3] = 1    #not important, will be refused anyway
+
         return [[calc(st,q,l) for st in row] for row in mult(self.t0i[ind+1], [[str(e)] for e in local_point])[0:3]]
         
 class jacobian():

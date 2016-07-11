@@ -65,7 +65,7 @@ class force_calculator():
     
     
 if __name__ == '__main__':
-    fc = force_calculator(1, [1,1,1,1,1,1], [1,1,1,1])
+    fc = force_calculator(1, [1,1,1,1,1,1], [1,1,1])
     
     
     
