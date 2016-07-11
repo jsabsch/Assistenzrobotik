@@ -5,6 +5,9 @@ import rospy
 from sensor_msgs.msg import JointState
 from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Pose
+from geometry_msgs.msg import Vector3Stamped
+
+import force
 
 def subscribe_arm_state(msg):
     """ Get the Pose of the arms last joint and control the target positions.
@@ -24,7 +27,8 @@ def subscribe_arm_state(msg):
 def __is_on_target(pose):
     """ TODO: get arm state. if is nearly the same as target position, set on_target true
     """
-    pass
+    #pass
+    return True
     
 
 
@@ -37,7 +41,9 @@ def rotate_path(path, index):
             index = 0
     
     global right_pub
-    right_pub.publish(__fill_header(path[index]))
+    pose = path[index]
+    __fill_header(pose.header)
+    right_pub.publish(pose)
     
     return index
 
@@ -77,19 +83,23 @@ def __pose(px,py,pz,ow,ox,oy,oz):
     
     return ps
 
-def __fill_header(pose_stamped):
-    """ Fill a pose_stampeds header with a sequence number, a time stamp and the frame id.
+def __maxVelocity(scalarValue):
+    msg = Vector3Stamped()
+    __fill_header(msg.header)
+    msg.vector.x = msg.vector.y = msg.vector.z = scalarValue
+
+def __fill_header(header):
+    """ Fill a header with a sequence number, a time stamp and the frame id.
     """
-    
     global seq
     
-    pose_stamped.header.seq = seq
+    header.seq = seq
     seq += 1
     
-    pose_stamped.header.stamp = rospy.Time.now()
-    pose_stamped.header.frame_id = "/table"
+    header.stamp = rospy.Time.now()
+    header.frame_id = "/table"
     
-    return pose_stamped
+    return header
 
 def tmp():
     # TODO: NUR ZUM TESTEN
@@ -107,13 +117,14 @@ def tmp():
 if __name__ == '__main__':
 
     rospy.init_node('assistenzrobotik')
-    rate = rospy.Rate(10) # 10hz
+    rate = rospy.Rate(10)  # 10hz
 
     standard_path = __init_pose_array()
-        
-    rospy.Subscriber("/vrep/LBR_iiwa_14_RB20/jointStatus", JointState, subscribe_arm_state)
-    right_pub = rospy.Publisher("commands", PoseStamped, queue_size=1)
-    
+
+    rospy.Subscriber("/endEffectorPos", PoseStamped, subscribe_arm_state)
+    right_pub = rospy.Publisher("/targetPos", PoseStamped, queue_size=1)
+    rospy.Publisher("/maxVelocity", Vector3Stamped, queue_size=1)
+
     index = 0
     seq = 0
     on_target = False
