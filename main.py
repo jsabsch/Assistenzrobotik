@@ -26,11 +26,12 @@ def rotate_path(path, index):
     
     global right_pub
     global velocityCalculator
+    
     pose = path[index]
-    velocityCalculator.setDir((pose.pose.position.x, pose.pose.position.y, pose.pose.position.z))
+    velocityCalculator.setDir(pose)
     
     __fill_header(pose.header)
-    right_pub.publish(pose)
+    #right_pub.publish(pose)
     
     return index
 
@@ -88,7 +89,7 @@ def tmp():
     global tmp_counter
     tmp_counter += 1
     
-    if tmp_counter >= 20:
+    if tmp_counter >= 25:
         tmp_counter = 0
         return True
 
@@ -103,7 +104,7 @@ if __name__ == '__main__':
 
     right_pub = rospy.Publisher("/targetPos", PoseStamped, queue_size=1)
 
-    velocityCalculator = velocity.Velocity()
+    velocityCalculator = velocity.Velocity(right_pub)
 
     index = 0
     seq = 0
@@ -116,6 +117,8 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
         index = rotate_path(standard_path, index)
         on_target = tmp()   # TODO: NUR ZUM TESTEN
+        
+        velocityCalculator.update()
         rate.sleep()
 
     print("\nShutdown.")
